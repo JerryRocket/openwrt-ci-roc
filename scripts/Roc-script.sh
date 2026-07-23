@@ -36,10 +36,15 @@ sed -i "s#_('Firmware Version'), (L\.isObject(boardinfo\.release) ? boardinfo\.r
 rm -rf feeds/luci/applications/luci-app-argon-config
 rm -rf feeds/luci/applications/luci-app-wechatpush
 rm -rf feeds/luci/applications/luci-app-appfilter
+rm -rf feeds/luci/applications/luci-app-ddns
 rm -rf feeds/luci/applications/luci-app-frpc
 rm -rf feeds/luci/applications/luci-app-frps
+rm -rf feeds/luci/applications/luci-app-upnp
+rm -rf feeds/luci/applications/luci-app-wol
 rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf feeds/packages/net/open-app-filter
+rm -rf feeds/packages/net/ddns-scripts
+rm -rf feeds/packages/net/miniupnpd
 rm -rf feeds/packages/net/ariang
 rm -rf feeds/packages/net/aria2
 rm -rf feeds/packages/net/nginx
@@ -64,7 +69,7 @@ function git_sparse_clone() {
   rm -rf "$repodir"
 }
 
-# Aria2 & nginx & Go & frp & Argon & Aurora & OpenList & Lucky & wechatpush & OpenAppFilter & 集客无线AC控制器 & 雅典娜LED控制
+# Aria2 & nginx & Go & DDNS & frp & UPnP & Wol & Argon & Aurora & OpenList & Lucky & wechatpush & OpenAppFilter & 集客无线AC控制器 & 雅典娜LED控制
 git_sparse_clone aria2 https://github.com/laipeng668/packages net/aria2
 mv -f package/aria2 feeds/packages/net/aria2
 git_sparse_clone nginx https://github.com/laipeng668/packages net/nginx
@@ -73,11 +78,21 @@ git_sparse_clone ariang https://github.com/laipeng668/packages net/ariang
 mv -f package/ariang feeds/packages/net/ariang
 git_sparse_clone master https://github.com/laipeng668/packages lang/golang
 mv -f package/golang feeds/packages/lang/golang
+git_sparse_clone master https://github.com/laipeng668/packages net/ddns-scripts
+mv -f package/ddns-scripts feeds/packages/net/ddns-scripts
+git_sparse_clone master https://github.com/laipeng668/luci applications/luci-app-ddns
+mv -f package/luci-app-ddns feeds/luci/applications/luci-app-ddns
 git_sparse_clone frp-binary-toml https://github.com/laipeng668/packages net/frp
 mv -f package/frp feeds/packages/net/frp
 git_sparse_clone frp-toml https://github.com/laipeng668/luci applications/luci-app-frpc applications/luci-app-frps
 mv -f package/luci-app-frpc feeds/luci/applications/luci-app-frpc
 mv -f package/luci-app-frps feeds/luci/applications/luci-app-frps
+git_sparse_clone master https://github.com/immortalwrt/packages net/miniupnpd
+mv -f package/miniupnpd feeds/packages/net/miniupnpd
+git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-upnp
+mv -f package/luci-app-upnp feeds/luci/applications/luci-app-upnp
+git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-wol
+mv -f package/luci-app-wol feeds/luci/applications/luci-app-wol
 git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
 git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora feeds/luci/themes/luci-theme-aurora
