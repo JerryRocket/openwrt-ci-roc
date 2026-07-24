@@ -21,8 +21,8 @@ grep -Fq "$firmware_version_anchor" "$luci_system_js" || { echo "Error: LuCI fir
 # sed -i 's/opp-microvolt = <937500>;/opp-microvolt = <950000>;/' target/linux/qualcommax/patches-6.12/0038-v6.16-arm64-dts-qcom-ipq6018-add-1.5GHz-CPU-Frequency.patch
 
 # 移除要替换的包
-rm -rf feeds/luci/themes/luci-theme-argon
-rm -rf feeds/luci/applications/luci-app-argon-config
+#rm -rf feeds/luci/themes/luci-theme-argon
+#rm -rf feeds/luci/applications/luci-app-argon-config
 #rm -rf feeds/luci/applications/luci-app-wechatpush
 #rm -rf feeds/luci/applications/luci-app-appfilter
 #rm -rf feeds/luci/applications/luci-app-ddns
@@ -81,8 +81,8 @@ git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-ap
 mv -f package/luci-app-upnp feeds/luci/applications/luci-app-upnp
 git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-wol
 mv -f package/luci-app-wol feeds/luci/applications/luci-app-wol
-git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
-git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
+#git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
+#git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
 #git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora feeds/luci/themes/luci-theme-aurora
 #git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config feeds/luci/applications/luci-app-aurora-config
 #git clone --depth=1 https://github.com/laipeng668/luci-app-openlist2 package/openlist2
