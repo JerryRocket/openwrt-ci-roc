@@ -19,6 +19,17 @@ jobs:
       contents: write
       actions: write
     with:
+      #默认主题
+      OWRT_THEME: argon
+      #默认主机名
+      OWRT_NAME: OWRT
+      #默认WIFI名称
+      OWRT_SSID: OWRT
+      #默认WIFI密码
+      OWRT_WORD: 12345678
+      #默认地址
+      OWRT_IP: 192.168.10.1
+      
       repo_url: https://github.com/LiBwrt/LibWrt.git
       repo_branch: 25.12-nss
       config_file: configs/IPQ60XX.config
