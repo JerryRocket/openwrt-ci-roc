@@ -219,7 +219,7 @@ jobs:
 
     - name: Load Custom Configuration(加载自定义配置)
       run: |
-        echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")" >> $GITHUB_ENV
+        echo "OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")" >> $GITHUB_ENV
         chmod +x "$GITHUB_WORKSPACE/$DIY_SCRIPT"
         cd "$OPENWRT_PATH"
         "$GITHUB_WORKSPACE/$DIY_SCRIPT"
@@ -282,7 +282,7 @@ jobs:
 
         for file in *qualcommax*.bin *qualcommax*.ubi; do
             [ -e "$file" ] || continue
-            new_file="${file%.*}-${WRT_DATE}.${file##*.}"
+            new_file="${file%.*}-${OWRT_DATE}.${file##*.}"
             mv "$file" "$new_file"
         done
         if [ "${{ inputs.rename_qualcommax_to_nowifi }}" = "true" ]; then
@@ -300,7 +300,7 @@ jobs:
       with:
         name: ${{ inputs.firmware_tag }}
         allowUpdates: true
-        tag: ${{ inputs.firmware_tag }}}-${{env.WRT_DATE}}
+        tag: ${{ inputs.firmware_tag }}}-${{env.OWRT_DATE}}
         token: ${{ github.token }}
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
