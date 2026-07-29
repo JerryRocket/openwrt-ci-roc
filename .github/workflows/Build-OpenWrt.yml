@@ -191,6 +191,9 @@ jobs:
           echo "HASH=$HASH"
           echo "CACHE_PREFIX=$CACHE_PREFIX"
           echo "CACHE_KEY=$CACHE_KEY"
+          echo "OWRT_THEME=$OWRT_THEME"
+          echo "OWRT_NAME=$OWRT_NAME"
+          echo "OWRT_IP=$OWRT_IP"
         } >> "$GITHUB_ENV"
 
     - name: Cache Toolchain(缓存工具链)
