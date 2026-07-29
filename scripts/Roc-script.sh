@@ -118,7 +118,7 @@ git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-package
 rm -rf feeds/luci/applications/luci-app-passwall
 #rm -rf feeds/luci/applications/luci-app-openclash
 git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall package/luci-app-passwall
-#git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall2 package/luci-app-passwall2
+git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall2 package/luci-app-passwall2
 #git clone --depth=1 https://github.com/vernesong/OpenClash package/luci-app-openclash
 
 # 清理 PassWall 的 chnlist 规则文件
