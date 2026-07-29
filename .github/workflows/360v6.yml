@@ -2,11 +2,9 @@ name: 360v6-LibWrt
 
 on:
   workflow_dispatch:
-  #自动编译：当Auto-Clean运行完成后
-  workflow_run:
-    workflows: ["Auto-Clean"]
-    types:
-      - completed
+  workflow_call:
+  # schedule:
+  #   - cron: "0 18 * * *"
 
 permissions:
   contents: read
