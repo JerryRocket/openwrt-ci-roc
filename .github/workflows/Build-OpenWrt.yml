@@ -43,6 +43,42 @@ on:
         required: false
         type: string
         default: apk
+      WRT_CONFIG:
+        required: false
+        type: string
+      WRT_THEME:
+        required: false
+        type: string
+      WRT_NAME:
+        required: false
+        type: string
+      WRT_SSID:
+        required: false
+        type: string
+      WRT_WORD:
+        required: false
+        type: string
+      WRT_IP:
+        required: false
+        type: string
+      WRT_PW:
+        required: false
+        type: string
+      WRT_REPO:
+        required: false
+        type: string
+      WRT_BRANCH:
+        required: false
+        type: string
+      WRT_SOURCE:
+        required: false
+        type: string
+      WRT_PACKAGE:
+        required: false
+        type: string
+      WRT_TEST:
+        required: false
+        type: string
 
 permissions:
   contents: read
