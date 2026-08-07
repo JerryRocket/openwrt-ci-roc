@@ -51,7 +51,7 @@ rm -rf feeds/packages/net/miniupnpd
 rm -rf feeds/packages/net/ariang
 rm -rf feeds/packages/net/aria2
 rm -rf feeds/packages/net/nginx
-rm -rf feeds/packages/net/frp
+#rm -rf feeds/packages/net/frp
 rm -rf feeds/packages/lang/golang
 
 # Git稀疏克隆，只克隆指定目录到本地
@@ -81,7 +81,7 @@ git_sparse_clone ariang https://github.com/laipeng668/packages net/ariang
 mv -f package/ariang feeds/packages/net/ariang
 git_sparse_clone master https://github.com/laipeng668/packages lang/golang
 mv -f package/golang feeds/packages/lang/golang
-git_sparse_clone master https://github.com/laipeng668/packages net/ddns-scripts
+#git_sparse_clone master https://github.com/laipeng668/packages net/ddns-scripts
 #mv -f package/ddns-scripts feeds/packages/net/ddns-scripts
 #git_sparse_clone master https://github.com/laipeng668/luci applications/luci-app-ddns
 #mv -f package/luci-app-ddns feeds/luci/applications/luci-app-ddns
