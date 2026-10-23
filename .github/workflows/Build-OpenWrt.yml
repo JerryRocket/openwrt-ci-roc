@@ -43,6 +43,42 @@ on:
         required: false
         type: string
         default: apk
+      OWRT_CONFIG:
+        required: false
+        type: string
+      OWRT_THEME:
+        required: false
+        type: string
+      OWRT_NAME:
+        required: false
+        type: string
+      OWRT_SSID:
+        required: false
+        type: string
+      OWRT_WORD:
+        required: false
+        type: string
+      OWRT_IP:
+        required: false
+        type: string
+      OWRT_PW:
+        required: false
+        type: string
+      OWRT_REPO:
+        required: false
+        type: string
+      OWRT_BRANCH:
+        required: false
+        type: string
+      OWRT_SOURCE:
+        required: false
+        type: string
+      OWRT_PACKAGE:
+        required: false
+        type: string
+      OWRT_TEST:
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -208,6 +244,9 @@ jobs:
           echo "STAGING_SCOPE_PREFIX=$STAGING_SCOPE_PREFIX"
           echo "STAGING_FALLBACK_PREFIX=$STAGING_FALLBACK_PREFIX"
           echo "ARTIFACT_NAME=$ARTIFACT_NAME"
+          echo "OWRT_THEME=${{ inputs.OWRT_THEME }}"
+          echo "OWRT_NAME=${{ inputs.OWRT_NAME }}"
+          echo "OWRT_IP=${{ inputs.OWRT_IP }}"
         } >> "$GITHUB_ENV"
         {
           echo "artifact_name=$ARTIFACT_NAME"
@@ -329,6 +368,11 @@ jobs:
           exit 1
         fi
         tar -zcf "$ARTIFACT_PREFIX.Packages.tar.gz" packages
+        for file in *qualcommax*.bin *qualcommax*.ubi; do
+            [ -e "$file" ] || continue
+            new_file="${file%.*}-${OWRT_DATE}.${file##*.}"
+            mv "$file" "$new_file"
+        done
         if [ "${{ inputs.rename_qualcommax_to_nowifi }}" = "true" ]; then
           for file in *qualcommax*.bin; do
             [ -e "$file" ] || continue
@@ -378,7 +422,7 @@ jobs:
         allowUpdates: true
         replacesArtifacts: true
         artifactErrorsFailBuild: true
-        tag: ${{ inputs.firmware_tag }}
+        tag: ${{ inputs.firmware_tag }}-${{env.OWRT_DATE}}
         token: ${{ github.token }}
         artifacts: artifacts/firmware/*
         body: |
@@ -388,12 +432,10 @@ jobs:
           - 💻 这是 ${{ inputs.firmware_tag }} 平台使用的 OpenWrt 固件
           - ⚽ 固件源码: ${{ inputs.repo_url }}
           - 💝 源码分支: ${{ inputs.repo_branch }}
-          - 🌐 默认地址: **192.168.2.1**
+          - 🌐 默认地址: **192.168.10.1**
           - 🔑 默认密码: none
           ### 🧊 固件版本
           - 固件内核版本：**${{ needs.Build.outputs.version_kernel }}**
-          - 固件编译前最后一次➦[主源码](${{ inputs.repo_url }})更新记录
-          - ${{ needs.Build.outputs.version_info }}
 
   Cleanup:
     runs-on: ubuntu-24.04
