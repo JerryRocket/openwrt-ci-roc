@@ -247,6 +247,7 @@ jobs:
           echo "OWRT_THEME=${{ inputs.OWRT_THEME }}"
           echo "OWRT_NAME=${{ inputs.OWRT_NAME }}"
           echo "OWRT_IP=${{ inputs.OWRT_IP }}"
+          echo "OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")"
         } >> "$GITHUB_ENV"
         {
           echo "artifact_name=$ARTIFACT_NAME"
