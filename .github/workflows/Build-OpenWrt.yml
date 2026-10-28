@@ -423,7 +423,7 @@ jobs:
         allowUpdates: true
         replacesArtifacts: true
         artifactErrorsFailBuild: true
-        tag: ${{ inputs.firmware_tag }}-${{env.OWRT_DATE}}
+        tag: ${{ inputs.firmware_tag }}-$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")}
         token: ${{ github.token }}
         artifacts: artifacts/firmware/*
         body: |
