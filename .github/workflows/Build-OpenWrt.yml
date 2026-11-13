@@ -110,6 +110,7 @@ jobs:
       staging_key: ${{ steps.variables.outputs.staging_key }}
       version_info: ${{ steps.source.outputs.version_info }}
       version_kernel: ${{ steps.source.outputs.version_kernel }}
+      owrt_date: ${{ steps.variables.outputs.owrt_date }}
 
     steps:
     - name: Check Server Performance(检查服务器性能)
@@ -234,6 +235,7 @@ jobs:
         STAGING_SCOPE_PREFIX="${CACHE_PREFIX}-staging-${CACHE_SCOPE}-"
         STAGING_FALLBACK_PREFIX="${CACHE_PREFIX}-staging-"
         ARTIFACT_NAME="firmware-${ARTIFACT_PREFIX}"
+        OWRT_DATE="$(TZ=UTC-8 date +'%Y%m%d_%H%M%S')"
         {
           echo "CCACHE_KEY=$CCACHE_KEY"
           echo "CCACHE_RESTORE_PREFIX=$CCACHE_RESTORE_PREFIX"
@@ -247,12 +249,13 @@ jobs:
           echo "OWRT_THEME=${{ inputs.OWRT_THEME }}"
           echo "OWRT_NAME=${{ inputs.OWRT_NAME }}"
           echo "OWRT_IP=${{ inputs.OWRT_IP }}"
-          echo "OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")"
+          echo "OWRT_DATE=$OWRT_DATE"
         } >> "$GITHUB_ENV"
         {
           echo "artifact_name=$ARTIFACT_NAME"
           echo "ccache_key=$CCACHE_KEY"
           echo "staging_key=$STAGING_KEY"
+          echo "owrt_date=$OWRT_DATE"
         } >> "$GITHUB_OUTPUT"
 
     - name: Cache Ccache(缓存编译结果)
@@ -419,11 +422,11 @@ jobs:
     - name: Upload Firmware To Release(发布固件)
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ inputs.firmware_tag }}
+        name: ${{ inputs.firmware_tag }}}-${{ needs.Build.outputs.owrt_date }}
         allowUpdates: true
         replacesArtifacts: true
         artifactErrorsFailBuild: true
-        tag: ${{ inputs.firmware_tag }}
+        tag: ${{ inputs.firmware_tag }}}-${{ needs.Build.outputs.owrt_date }}
         token: ${{ github.token }}
         artifacts: artifacts/firmware/*
         body: |
@@ -437,6 +440,28 @@ jobs:
           - 🔑 默认密码: none
           ### 🧊 固件版本
           - 固件内核版本：**${{ needs.Build.outputs.version_kernel }}**
+
+    - name: Cleanup Old Releases(清理旧版本)
+      env:
+        GH_TOKEN: ${{ github.token }}
+        KEEP_RELEASES: 3
+      run: |
+        releases=$(gh release list \
+          --limit 100 \
+          --json tagName \
+          --jq '.[].tagName')
+
+        count=0
+
+        while IFS= read -r tag; do
+          [ -n "$tag" ] || continue
+          count=$((count + 1))
+
+          if [ "$count" -gt "$KEEP_RELEASES" ]; then
+            echo "Deleting old release: $tag"
+            gh release delete "$tag" --cleanup-tag --yes
+          fi
+        done <<< "$releases"
 
   Cleanup:
     runs-on: ubuntu-24.04
