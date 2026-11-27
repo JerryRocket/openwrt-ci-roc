@@ -509,29 +509,12 @@ jobs:
 
         delete_old_cache_versions "$CCACHE_KEY"
         delete_old_cache_versions "$STAGING_KEY"
-
-    - name: Cleanup Old Releases(清理旧版本)
-      env:
-        GH_TOKEN: ${{ github.token }}
-        KEEP_RELEASES: 3
-      run: |
-        releases=$(gh release list \
-          --repo "$GITHUB_REPOSITORY" \
-          --limit 100 \
-          --json tagName \
-          --jq '.[].tagName')
-
-        count=0
-
-        while IFS= read -r tag; do
-          [ -n "$tag" ] || continue
-          count=$((count + 1))
-
-          if [ "$count" -gt "$KEEP_RELEASES" ]; then
-            echo "Deleting old release: $tag"
-            gh release delete "$tag" \
-              --repo "$GITHUB_REPOSITORY" \
-              --cleanup-tag \
-              --yes
-          fi
         done <<< "$releases"
+  
+    - name: Cleanup Old Releases(清理旧版本)
+      uses: Nats-ji/delete-old-releases@v1
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          keep-count: 2
+          keep-old-minor-releases: false
+
