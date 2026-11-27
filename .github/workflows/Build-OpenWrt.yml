@@ -422,11 +422,11 @@ jobs:
     - name: Upload Firmware To Release(发布固件)
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ inputs.firmware_tag }}}-${{ needs.Build.outputs.owrt_date }}
+        name: ${{ inputs.firmware_tag }}-${{ needs.Build.outputs.owrt_date }}
         allowUpdates: true
         replacesArtifacts: true
         artifactErrorsFailBuild: true
-        tag: ${{ inputs.firmware_tag }}}-${{ needs.Build.outputs.owrt_date }}
+        tag: ${{ inputs.firmware_tag }}-${{ needs.Build.outputs.owrt_date }}
         token: ${{ github.token }}
         artifacts: artifacts/firmware/*
         body: |
