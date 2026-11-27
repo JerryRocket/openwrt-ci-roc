@@ -132,6 +132,9 @@ clone_repository() {
 mkdir -p "$(dirname "$THIRD_PARTY_SOURCES_FILE")"
 printf 'Repository\tBranch\tCommit\n' > "$THIRD_PARTY_SOURCES_FILE"
 
+#修改默认主题
+find ./feeds/luci/collections/ -type f -name "Makefile" -exec sed -i "s/luci-theme-bootstrap/luci-theme-$OWRT_THEME/g" {} +
+
 # 修改默认IP & 固件名称 & 编译署名和时间
 sed -i 's/192.168.1.1/$OWRT_IP/g' package/base-files/files/bin/config_generate
 sed -i "s/hostname='.*'/hostname='$OWRT_NAME'/g" package/base-files/files/bin/config_generate
